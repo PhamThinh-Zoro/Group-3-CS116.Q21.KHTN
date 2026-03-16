@@ -4,7 +4,7 @@
 
 24520010 - Đặng Phú Duy
 
-???????? - Phạm Ngọc Phú Thịnh
+24521703 - Phạm Ngọc Phú Thịnh
 
 ## 1. Các phương pháp thử nghiệm
 
