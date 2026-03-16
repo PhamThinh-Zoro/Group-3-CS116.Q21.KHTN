@@ -15,7 +15,7 @@ So sánh sai số bình phương trung bình giữa các phương pháp:
 
 * **Theo Item:** 34.0144
 * **Theo Location:** 52.0989
-* **Phương pháp B (Global Model):** 52.1389
+* **Phương pháp B (Global Model):** 52.1375
 * **Phương pháp A:** 175.1751
 
 ## 3. Kết luận và Lựa chọn
