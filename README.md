@@ -1,4 +1,4 @@
-# Nhóm 3 CS116.Q21.KHTN - Báo cáo Thực nghiệm Mô hình Dự báo
+# Nhóm 7 CS116.Q21.KHTN - Báo cáo Thực nghiệm Mô hình Dự báo
 
 24520002 - Mai Quốc Anh
 
