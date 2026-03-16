@@ -1,4 +1,7 @@
 # Nhóm 3 CS116.Q21.KHTN - Báo cáo Thực nghiệm Mô hình Dự báo
+24520002 - Mai Quốc Anh
+24520010 - Đặng Phú Duy
+???????? - Phạm Ngọc Phú Thịnh
 
 ## 1. Các phương pháp thử nghiệm
 
