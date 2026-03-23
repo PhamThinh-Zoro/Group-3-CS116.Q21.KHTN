@@ -4,9 +4,16 @@ item_df = pl.read_parquet(r"items (1).parquet")
 
 result = item_df.with_columns([
     # step: 1-5 -> int
-    pl.col("description")
-    .str.extract(r"step\s*([1-5])", 1)
-    .cast(pl.Int8)
+    pl.when(
+        pl.col("description").str.contains("(?i)cho mẹ bầu")
+        & pl.col("description").str.extract(r"step\s*([1-5])", 1).is_null()
+    )
+    .then(0)
+    .otherwise(
+        pl.col("description")
+        .str.extract(r"step\s*([1-5])", 1)
+        .cast(pl.Int8)
+    )
     .alias("step"),
 
     # size -> map thành số
@@ -43,3 +50,5 @@ print(result['step'].unique())
 print(result['piece'].unique())
 
 result.write_parquet("output.parquet")
+# df = pl.read_parquet("output.parquet")
+# print(df.filter(df["step"] == 1))
