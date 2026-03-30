@@ -1,4 +1,5 @@
 streamlit
+scikit-learn
+polars
 numpy
-pickle
-pandas
+matplotlib
