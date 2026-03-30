@@ -7,16 +7,10 @@ st.set_page_config(page_title="Demo Dự báo Giao dịch", page_icon="📈")
 
 # --- 2. Tải mô hình ---
 # Sử dụng st.cache_resource để không phải load lại model mỗi lần tương tác UI
-@st.cache_resource
-def load_model():
-    try:
-        with open('modelB.pkl', 'rb') as f:
-            return pickle.load(f)
-    except FileNotFoundError:
-        st.error("Không tìm thấy file 'modelB.pkl'. Vui lòng đảm bảo file nằm cùng thư mục với app.py")
-        return None
+#@st.cache_resource
+with open('modelB.pkl', 'rb') as f:
+    model=pickle.load(f)
 
-model = load_model()
 
 # --- 3. Giao diện người dùng (UI) ---
 st.title("📈 Demo Dự báo Lượng Bán (Linear Regression)")
