@@ -8,7 +8,7 @@ st.set_page_config(page_title="Demo Dự báo Giao dịch", page_icon="📈")
 # --- 2. Tải mô hình ---
 # Sử dụng st.cache_resource để không phải load lại model mỗi lần tương tác UI
 #@st.cache_resource
-with open('modelB.pkl', 'rb') as f:
+with open('BT2_hoi_qui/modelB.pkl', 'rb') as f:
     model=pickle.load(f)
 
 
