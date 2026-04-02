@@ -1,0 +1,31 @@
+input: file items va transaction -> merge lại, chia theo week và month : đây là bước preprocessing, 
+output: quantity chia cho số ngày trong week để cân bằng
+phân tích:
+- plot ra: có 6 cách plot:
++ plot toàn cục: lấy theo tổng
++ plot theo cat_: lấy 1 vài cái tiêu biểu (random), phải group by theo category
++ plot theo item_id: lấy random, group by theo item_id
+- khi plot ra nên chú thích week nào có lễ và week nào kh có lễ
+- plot ra xong rồi chém
+viết hàm plot có tham số đầu vào là cat
+
+thống kê:
+tính doanh số theo w_i+1 - w_i ( tính sự thay doi theo week ), tuần w_i+1 có lễ, từ tuần có
+thống kê doanh số theo 2 cột: không có lễ sang có lễ, và không có lễ giữ nguyên lấy trung bình wi+1 - wi (cụ thể là week4Month12 - week3Month12)
++ thống kê toàn cục: gồm 2 cột mean của bình thường và mean của ngày lễ
++ thống kê theo cat: gồm 3 cột cat,  mean của bình thường và mean của ngày lễ
++ thống kê theo item_id: gồm 3 cột item_id, mean của bình thường và mean của ngày lễ
+
+output bảng ra file parquet
+output plot ra png
+
+chia việc:
+- plot tự preprocessing
+- thống kê tự preprocessing
+- viết báo cáo
+
+file nộp:
+- 2 file .ipynb
+- 6 file png, mỗi png chứa 1 cái plot
+- 6 file parquet thống kê cho 6 types
+- 1 file readme báo cáo
