@@ -15,8 +15,8 @@ st.title("🌐 Category Network Visualizer")
 # ========== Load data ==========
 @st.cache_resource
 def load_data():
-    transactions = pl.read_parquet(r"C:\coding_space\study\CS116\transactions-202411-to-202412.parquet")
-    items = pl.read_parquet(r"C:\coding_space\study\CS116\items.parquet")
+    transactions = pl.read_parquet(r"transactions-202411-to-202412.parquet")
+    items = pl.read_parquet(r"items.parquet")
     return transactions, items
 
 # ========== Build graph function ==========

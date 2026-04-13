@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "Babycare", "label": "Babycare", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "label": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "label": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "T\u00e3", "label": "T\u00e3", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "V\u1ec7 sinh", "label": "V\u1ec7 sinh", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "S\u1eefa", "label": "S\u1eefa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "TPCN", "label": "TPCN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Th\u1eddi trang", "label": "Th\u1eddi trang", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Textile", "label": "Textile", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "label": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "label": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Ph\u1ee5 ki\u1ec7n", "label": "Ph\u1ee5 ki\u1ec7n", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "label": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "S\u1eefa n\u01b0\u1edbc", "label": "S\u1eefa n\u01b0\u1edbc", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "Babycare", "to": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "width": 4.788729815851928}, {"from": "Babycare", "to": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "width": 4.34291366526682}, {"from": "Babycare", "to": "T\u00e3", "width": 3.889000075280616}, {"from": "Babycare", "to": "V\u1ec7 sinh", "width": 3.88415753538612}, {"from": "Babycare", "to": "S\u1eefa", "width": 3.6194310521902886}, {"from": "Babycare", "to": "TPCN", "width": 3.352118183381525}, {"from": "Babycare", "to": "Th\u1eddi trang", "width": 3.3281336364493903}, {"from": "Babycare", "to": "Textile", "width": 3.2934284747769556}, {"from": "Babycare", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 3.1151010040418723}, {"from": "Babycare", "to": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "width": 2.7813323707123745}, {"from": "Babycare", "to": "Ph\u1ee5 ki\u1ec7n", "width": 2.5622548576307174}, {"from": "Babycare", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 2.315313234231002}, {"from": "Babycare", "to": "S\u1eefa n\u01b0\u1edbc", "width": 2.285597577977131}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "width": 4.4505987740524295}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "T\u00e3", "width": 3.9172218369483507}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "V\u1ec7 sinh", "width": 3.7977732839744713}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "S\u1eefa", "width": 3.430052025682793}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "TPCN", "width": 3.357770685429148}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "Th\u1eddi trang", "width": 2.9886101356690506}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "Textile", "width": 2.815208653905436}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 2.723590691969434}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "width": 2.712414442671718}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "S\u1eefa n\u01b0\u1edbc", "width": 2.5600936511742067}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 2.4864051759012233}, {"from": "H\u00f3a m\u1ef9 ph\u1ea9m cho b\u00e9", "to": "Ph\u1ee5 ki\u1ec7n", "width": 2.2819174087462097}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "width": 4.289495520023925}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "S\u1eefa", "width": 4.121038896789221}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "S\u1eefa n\u01b0\u1edbc", "width": 4.091984222761319}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "T\u00e3", "width": 3.8955263711519637}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 3.8688563972206613}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "V\u1ec7 sinh", "width": 3.798689737314083}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "TPCN", "width": 3.6737738465328227}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "Ph\u1ee5 ki\u1ec7n", "width": 3.3875205677246703}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "Th\u1eddi trang", "width": 3.185315657772983}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 2.5502044279356455}, {"from": "Th\u1ef1c ph\u1ea9m cho b\u00e9", "to": "Textile", "width": 2.159625830985747}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "S\u1eefa", "width": 2.348802941901528}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "T\u00e3", "width": 2.3309266702512397}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "V\u1ec7 sinh", "width": 2.2688532639984373}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "S\u1eefa n\u01b0\u1edbc", "width": 2.1779517153044936}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 1.9186780505794876}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "Th\u1eddi trang", "width": 1.8137704964082633}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "TPCN", "width": 1.7756676320685951}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.3916417198535187}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "Ph\u1ee5 ki\u1ec7n", "width": 1.3554795170852836}, {"from": "Th\u1ef1c ph\u1ea9m cho gia \u0111\u00ecnh", "to": "Textile", "width": 1.2032012603446887}, {"from": "S\u1eefa", "to": "T\u00e3", "width": 3.63706616856941}, {"from": "S\u1eefa", "to": "TPCN", "width": 3.0272070183352904}, {"from": "S\u1eefa", "to": "V\u1ec7 sinh", "width": 2.741564817164731}, {"from": "S\u1eefa", "to": "S\u1eefa n\u01b0\u1edbc", "width": 2.376084787550083}, {"from": "S\u1eefa", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 2.2276199743151537}, {"from": "S\u1eefa", "to": "Th\u1eddi trang", "width": 2.2053178032701326}, {"from": "S\u1eefa", "to": "Ph\u1ee5 ki\u1ec7n", "width": 1.933856219187051}, {"from": "S\u1eefa", "to": "Textile", "width": 1.7336160258265592}, {"from": "S\u1eefa", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.6988630408666268}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "T\u00e3", "width": 2.498555530478509}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "V\u1ec7 sinh", "width": 2.1008104175085403}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 1.9101310423361202}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "TPCN", "width": 1.7912201688173948}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "Th\u1eddi trang", "width": 1.5043284012892264}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.2983505982613877}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "Ph\u1ee5 ki\u1ec7n", "width": 1.2608389376911793}, {"from": "S\u1eefa n\u01b0\u1edbc", "to": "Textile", "width": 0.9274141537742762}, {"from": "T\u00e3", "to": "V\u1ec7 sinh", "width": 3.6370368767929735}, {"from": "T\u00e3", "to": "TPCN", "width": 2.8694171797324626}, {"from": "T\u00e3", "to": "Th\u1eddi trang", "width": 2.594712695415925}, {"from": "T\u00e3", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 2.3297760708842037}, {"from": "T\u00e3", "to": "Textile", "width": 2.2655406498523463}, {"from": "T\u00e3", "to": "Ph\u1ee5 ki\u1ec7n", "width": 1.9581805298776573}, {"from": "T\u00e3", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.8689986291325384}, {"from": "V\u1ec7 sinh", "to": "Th\u1eddi trang", "width": 2.6052012455676707}, {"from": "V\u1ec7 sinh", "to": "Textile", "width": 2.379292437531553}, {"from": "V\u1ec7 sinh", "to": "TPCN", "width": 2.319294552460682}, {"from": "V\u1ec7 sinh", "to": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "width": 2.237861926221635}, {"from": "V\u1ec7 sinh", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.869411040021609}, {"from": "V\u1ec7 sinh", "to": "Ph\u1ee5 ki\u1ec7n", "width": 1.7888997718859267}, {"from": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "to": "Th\u1eddi trang", "width": 2.4600462504688005}, {"from": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "to": "Ph\u1ee5 ki\u1ec7n", "width": 2.080175033821573}, {"from": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "to": "TPCN", "width": 1.795710746421054}, {"from": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "to": "Textile", "width": 1.3544590533943093}, {"from": "\u0110\u1ed3 ch\u01a1i \u0026 S\u00e1ch", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.1165280138463547}, {"from": "TPCN", "to": "Th\u1eddi trang", "width": 1.9213811438098711}, {"from": "TPCN", "to": "Ph\u1ee5 ki\u1ec7n", "width": 1.4180146505380455}, {"from": "TPCN", "to": "Textile", "width": 1.3880050111327777}, {"from": "TPCN", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.256168914336805}, {"from": "Ph\u1ee5 ki\u1ec7n", "to": "Th\u1eddi trang", "width": 3.005371510777015}, {"from": "Ph\u1ee5 ki\u1ec7n", "to": "Textile", "width": 1.0705530106354888}, {"from": "Ph\u1ee5 ki\u1ec7n", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 0.6999435959210019}, {"from": "Th\u1eddi trang", "to": "Textile", "width": 2.758143676686689}, {"from": "Th\u1eddi trang", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 1.3584356848514916}, {"from": "Textile", "to": "H\u00f3a m\u1ef9 ph\u1ea9m gia \u0111\u00ecnh", "width": 0.8532353170694008}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
